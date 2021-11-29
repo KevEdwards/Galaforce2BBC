@@ -6,7 +6,7 @@
 
 ![Screenshot](screenshot.png)
 
-40 years ago, on the 1st December 1981, the BBC Micro was launched. Demand was very high and Acorn struggled to make enough machines, however, by early 1982 things started to improve. For many school-children, the BBC Micro made a long lasting impression, and for many of us it also shaped our future careers. Mine was making video games, something that I was still doing until recently until I decided to retire.
+40 years ago, on the 1st December 1981, the BBC Micro was launched. Demand was very high and Acorn struggled to make enough machines, however, by early 1982 things started to improve. For many school-children, the BBC Micro made a long lasting impression, and for many of us it also shaped our future careers. Mine was making video games, something that I was still doing until recently when I decided to retire.
 
 I have decided to mark this occasion by releasing the entire buildable source code for 'Galaforce 2 ( Aliens' Revenge )' to preserve it for the future.
 
