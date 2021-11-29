@@ -1,0 +1,71 @@
+    0REM SAVE"$.Galaforce2.Master"
+   10REM 6502 Tube version
+   20REM (c) Kevin Edwards, 28th July 1987
+   30REM Galaforce 3 Master, created on 2nd July 2018
+   40MODE7
+   50*FX 12 2
+   60 
+   70PG%=PAGE:TIME=0
+   80objstrt%=&E00
+   90objend%=&5800
+  100modu%=&400
+  110dowsize%=&B00
+  120sceaddr%=&800+modu%+(objend%-objstrt%)+dowsize%
+  130IF(sceaddr% AND &FF)<>0 sceaddr%=(sceaddr% AND &FF00)+&100
+  140 
+  150PRINTCHR$(134)"Galaforce 3 Ver 1.00 /";CHR$(131)"BBC version"
+  160A%=234:X%=0:Y%=&FF:Z%=(USR(&FFF4) AND &FF00)/&100
+  170IF Z%=0 OR HIMEM<>&B800 PRINT'"Re-boot with 6502 2nd processor running"'"Hi-Basic !":VDU7:END
+  180 
+  190REM Link 'one pass' source files
+  200 
+  210OSCLI"LOAD Const "+STR$~(sceaddr%)
+  220PAGE=sceaddr%:GOSUB 0
+  230OSCLI"LOAD ZpWork "+STR$~(sceaddr%)
+  240PAGE=sceaddr%:GOSUB 0
+  250OSCLI"LOAD AbsWork "+STR$~(sceaddr%)
+  260PAGE=sceaddr%:GOSUB 0
+  270PRINT:VDU133:PRINTSTRING$(33,CHR$(255))
+  280VDU28,0,24,39,6
+  290 
+  300REM Link 'two pass' source files
+  310 
+  320FOR pass=4 TO 6 STEP 2
+  330P%=&900:O%=&800
+  340PRINT:FORL=1TO2:VDU141,129:PRINT"Pass = ";pass:NEXT
+  350READfile$
+  360IF file$="THE-END" RESTORE:GOTO 400
+  370OSCLI"LOAD "+file$+" "+STR$~(sceaddr%)
+  380PAGE=sceaddr%:GOSUB 0
+  390GOTO 350
+  400NEXT pass
+  410 
+  420REM Display info and save 'Obj'
+  430 
+  440IF Y%<>Z% VDU7:PRINT'"Phase error!":END
+  450PRINT'"Assembly time = ";TIME/100;" seconds"
+  460PRINT"Symbol space free = &";~HIMEM-!2 AND &FFFF;" (";HIMEM-!2 AND &FFFF;") bytes"
+  470IF (HIMEM-(!2 AND &FFFF))<&1000 PRINTCHR$130"Symbol space low!"
+  480PRINT"Code start  = &";~objstrt%
+  490PRINT"End of code = &";~last-1
+  500PRINT"Length      = &";~last-objstrt%;"    (";last-objstrt%;") bytes"
+  510PRINT"Bytes left  = &";~objend%-last;"   (";objend%-last;") bytes"
+  520 
+  530OSCLI"LOAD MOBJ "+STR$~(&800+modu%+(&4400-objstrt%))
+  540PROCsave
+  550IFINKEY(-1)PRINTCHR$7"Variables retained":END
+  570END
+  580 
+  590DEFPROCsave
+  600PRINT"Saving 'Obj' and 'Mod'"
+  610OSCLI"SAVE Mod 800+"+STR$~(modu%)+" FFFF0900 FFFF0900"
+  620OSCLI"SAVE Obj "+STR$~(&800+modu%)+" "+STR$~(O%)+" "+STR$~(gogo)+" "+STR$~(objstrt%)
+  630ENDPROC
+  640 
+  650DATA Module,Sprites,Sprites2,Main,MainB
+  660DATA Rout1,Rout2,High
+  670DATA Subr1,Subr1B,Subr1C,Subr2,DataFiles,Flags
+  680DATA ObjPro,ObjPro2,Object1,Object2,Object3
+  690DATA SpGra,PatIn1,PatDat1,PatDat2,PatDat3,Sect1,Sect2,Vectors1,Vectors2
+  700DATA StartUp,"THE-END"
+  710DATA FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

@@ -1,0 +1,7 @@
+    0REM SAVE"$.Galaforce2.L"
+   10REM BBC Loader
+   20REM (c) Kevin Edwards 1988
+   30*TV 255 1
+   40MODE5
+   50VDU23,1,0;0;0;0;28,0,31,19,26
+   60*RUN LoadGam
