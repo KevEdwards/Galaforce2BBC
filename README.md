@@ -38,6 +38,8 @@ Happy Birthday, BBC Micro, and thank you to Martin Galway and all the people at 
 
 An even bigger thank you to Pete Davidson, my Computer Studies teacher, who encouraged and taught me so much about programming, especially 6502 machine code.
 
+If you find any of my retro work interesting or useful please support me with a hot, fresh Ko-fi (https://ko-fi.com/kevedwardsretro)
+
 
 # Build Tools required ( PC )
 
